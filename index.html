@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="styles.css"/>
+<title>books</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="jquery-1.7.2.min.js"></script>
+<script src="js/main.js"></script>
+</head>
+<body>
+
+<script>
+
+/*
+
+HW Slider - простой слайдер на jQuery. 
+
+Настройки скрипта:
+
+hwSlideSpeed - Скорость анимации перехода слайда.
+hwTimeOut - время до автоматического перелистывания слайдов.
+hwNeedLinks - включает или отключает показ ссылок "следующий - предыдущий". Значения true или false
+
+Подробнее на http://heavenweb.ru/
+
+*/
+(function ($) {
+var hwSlideSpeed = 700;
+var hwTimeOut = 3000;
+var hwNeedLinks = true;
+
+$(document).ready(function(e) {
+	$('.slide').css(
+		{"position" : "absolute",
+		 "top":'0', "left": '0'}).hide().eq(0).show();
+	var slideNum = 0;
+	var slideTime;
+	slideCount = $("#slider .slide").size();
+	var animSlide = function(arrow){
+		clearTimeout(slideTime);
+		$('.slide').eq(slideNum).fadeOut(hwSlideSpeed);
+		if(arrow == "next"){
+			if(slideNum == (slideCount-1)){slideNum=0;}
+			else{slideNum++}
+			}
+		else if(arrow == "prew")
+		{
+			if(slideNum == 0){slideNum=slideCount-1;}
+			else{slideNum-=1}
+		}
+		else{
+			slideNum = arrow;
+			}
+		$('.slide').eq(slideNum).fadeIn(hwSlideSpeed, rotator);
+		$(".control-slide.active").removeClass("active");
+		$('.control-slide').eq(slideNum).addClass('active');
+		}
+if(hwNeedLinks){
+var $linkArrow = $('<a id="prewbutton" href="#">&lt;</a><a id="nextbutton" href="#">&gt;</a>')
+	.prependTo('#slider');		
+	$('#nextbutton').click(function(){
+		animSlide("next");
+		return false;
+		})
+	$('#prewbutton').click(function(){
+		animSlide("prew");
+		return false;
+		})
+}
+	var $adderSpan = '';
+	$('.slide').each(function(index) {
+			$adderSpan += '<span class = "control-slide">' + index + '</span>';
+		});
+	$('<div class ="sli-links">' + $adderSpan +'</div>').appendTo('#slider-wrap');
+	$(".control-slide:first").addClass("active");
+	$('.control-slide').click(function(){
+	var goToNum = parseFloat($(this).text());
+	animSlide(goToNum);
+	});
+	var pause = false;
+	var rotator = function(){
+			if(!pause){slideTime = setTimeout(function(){animSlide('next')}, hwTimeOut);}
+			}
+	$('#slider-wrap').hover(	
+		function(){clearTimeout(slideTime); pause = true;},
+		function(){pause = false; rotator();
+		});
+	rotator();
+});
+})(jQuery);
+
+</script>
+
+
+<div id="conteiner">
+<div id="header">
+<div class="contact"><p>Т. 8 (029) 111 11 11</p></div>
+<div class="logo"><a href=""><img src="images/logo.png" alt="logo"/></a></div>
+<div class="collaj"><img src="images/collag.png" alt="collag"/></div>
+</div>
+<div id="search">
+<div id="search_inner">
+<a href="">Поиск</a>
+<div class="search1">
+	<input type="submit" value="">
+     <input type="search1" name="q">
+   </div>
+   </div>
+</div>
+<div id="menu">
+<div id="menuinner">
+<ul>
+<li><a href="" class="home">Главная</a></li>
+<li><a href="">О магазине</a></li>
+<li><a href="">Доставка</a></li>
+<li><a href="">Книжные новости</a></li>
+<li><a href="">Контакты</a></li>
+<li><a href="">Корзина</a></li>
+</ul>
+</div>
+</div>
+
+<div id="slider-wrap">
+	<div id="slider">
+		<div class="slide"><a href=""><img src="images/1.jpg" width="640" height="360"></a></div>
+		<div class="slide"><a href=""><img src="images/2.jpg" width="640" height="360"></a></div>
+		<div class="slide"><a href=""><img src="images/3.jpg" width="640" height="360"></a></div>
+		</div>
+</div>
+
+
+<div id="temmenu">
+<div id="temmenuinner">
+<ul class="menu">
+<li><a href="">Художественная</a>
+<ol class="submenu">
+			<li><a href="#">Проза</a></li>
+            <li><a href="#">Поэзия</a></li>
+			<li><a href="#">Драматургия</a></li>
+    </ol></li>
+<li><a href="">Науки</a>
+<ol class="submenu">
+			<li><a href="#">Гуманитарные</a></li>
+            <li><a href="#">Точные</a></li>
+			<li><a href="#">Естественные</a></li>
+    </ol></li>
+<li><a href="">Иностранная</a>
+<ol class="submenu">
+			<li><a href="#">Английский</a></li>
+            <li><a href="#">Французский</a></li>
+			<li><a href="#">Немецкий</a></li>
+				<li><a href="#">Итальянский</a></li>
+					<li><a href="#">Испанский</a></li>
+    </ol></li>
+<li><a href="">Справочная</a>
+<ol class="submenu">
+			<li><a href="#">Энциклопедии</a></li>
+            <li><a href="#">Словари</a></li>
+			<li><a href="#">Справочники</a></li>
+    </ol></li>
+<li><a href="">Досуг</a>
+<ol class="submenu">
+			<li><a href="#">Кулинария</a></li>
+            <li><a href="#">Спорт</a></li>
+			<li><a href="#">Рукоделие</a></li>
+			<li><a href="#">Хобби</a></li>
+    </ol></li>
+<li><a href="">Детская</a>
+<ol class="submenu">
+			<li><a href="#">Проза</a></li>
+            <li><a href="#">Поэзия</a></li>
+			<li><a href="#">Драматургия</a></li>
+    </ol></li>
+</ul>
+</div>
+</div>
+
+<div id="spec">
+<div id="specinner">
+<div class="best15">
+<a href=""><img class="first" src="images/b15.png" alt="best15"/></a>
+</div>
+<div class="akcia">
+<a href=""><img class="first" src="images/a.png" alt="akcia"/></a>
+</div>
+<div class="best60">
+<a href=""><img class="first" src="images/b60.png" alt="best60"/></a>
+</div>
+</div>
+</div>
+
+<div id="preferens">
+<h2>НАШИ ПРЕИМУЩЕСТВА</h2>
+<ul>
+<li>Надежная доставка</li>
+<li>Внимательный персонал</li>
+<li>Старые традиции</li>
+</ul>
+</div>
+
+<div id="aboutus">
+<ul>
+<li><a id="shop">О магазине</a></li>
+<li><a id="tab">Книжный клуб</a></li>
+</ul>
+<div class="info">
+<img id="tab-img" src="images/black.jpg" alt="black"/>
+<div class="text"><p>Lorem ipsum dolors it amet, consectetueradipiscingelit. Aeneancommodo ligula eget dolor. Aeneanmassa. Cum sociisnatoquepenatibus et magnis dis parturient montes, nasceturridiculus mus.</p>
+<p>Donec quam felis, ultriciesnec, pellentesqueeu, pretiumquis, sem.</p> <p>Nullaconsequatmassaquisenim. Donecpedejusto, fringillavel, aliquetnec, vulputateeget, arcu. In enimjusto, rhoncusut, imperdiet a, venenatis vitae, justo.</p>
+<p>Nullam dictum feliseupedemollispretium. Integer tincidunt. Crasdapibus.</p> <p>Vivamuselementum semper nisi. Aeneanvulputateeleifendtellus.</p>
+<p>Donec quam felis, ultriciesnec, pellentesqueeu, pretiumquis, sem.</p> <p>Nullaconsequatmassaquisenim. Donecpedejusto, fringillavel, aliquetnec, vulputateeget, arcu. In enimjusto, rhoncusut, imperdiet a, venenatis vitae, justo.</p>
+</div>
+</div>
+</div>
+
+<div id="footer">
+<div id="footerinner">
+<div class="dublmenu">
+<ul>
+<li><a href="" class="home">Главная</a></li>
+<li><a href="">О магазине</a></li>
+<li><a href="">Доставка</a></li>
+<li><a href="">Книжные новости</a></li>
+<li><a href="">Контакты</a></li>
+<li><a href="">Корзина</a></li>
+</ul>
+</div>
+<div class="socnet">
+<ul>
+<li><a href=""><img src="images/fb.jpg" alt="fb"/></a></li>
+<li><a href=""><img src="images/twi.jpg" alt="twi"/></a></li>
+<li><a href=""><img src="images/vk.jpg" alt="vk"/></a></li>
+</ul>
+</div>
+<div class="copiright">
+<p>kj.by© 2016</p>
+</div>
+</div>
+</div>
+
+</div>
+
+</body>
+</html>
