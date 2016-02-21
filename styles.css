@@ -13,6 +13,11 @@ img {
   -webkit-filter: grayscale(1) !important ; /* Google Chrome, Safari 6+ & Opera 15+ */
 }
 
+.sm {
+	 height: 220px; 
+	 width: 140px;
+}
+
 /* Disable grayscale on hover */
 img:hover {
   filter: none !important ;
